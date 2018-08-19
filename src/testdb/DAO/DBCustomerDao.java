@@ -17,7 +17,15 @@ public class DBCustomerDao implements ICustomerDao {
     public DBCustomerDao() {
         allCustomers = new ArrayList<>();
         selectedCustomer = null;
+    }
 
+    @Override
+    public boolean add(Customer customer) {
+        if (!allCustomers.contains(customer)) {
+            allCustomers.add(customer);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -47,8 +55,8 @@ public class DBCustomerDao implements ICustomerDao {
         try {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select c.customerId,c.customerName,a.address,a.phone from customer c join address a on c.addressId = a.addressId\n" +
-"where c.CustomerId = "+Id);
+            ResultSet rs = stmt.executeQuery("select c.customerId,c.customerName,a.address,a.phone from customer c join address a on c.addressId = a.addressId\n"
+                    + "where c.CustomerId = " + Id);
 
             if (rs.getRow() != 0) {
                 int customerId = rs.getInt(1);
@@ -68,15 +76,6 @@ public class DBCustomerDao implements ICustomerDao {
 //        }
 //        }
 //        return null;
-    }
-
-    @Override
-    public boolean add(Customer customer) {
-        if (!allCustomers.contains(customer)) {
-            allCustomers.add(customer);
-            return true;
-        }
-        return false;
     }
 
 }
