@@ -32,7 +32,6 @@ public class DBAppointmentDao implements IAppointmentDao {
     @Override
     public ArrayList<Appointment> getAllAppointments() {
         Statement stmt;
-        appointmentList.clear();
 
         try {
             Connection con = DataSource.getConnection();
@@ -51,7 +50,6 @@ public class DBAppointmentDao implements IAppointmentDao {
     @Override
     public Appointment getCustomerAppointment(int customerId) {
         Statement stmt;
-        appointment = null;
 
         try {
             Connection con = DataSource.getConnection();
@@ -78,13 +76,3 @@ public class DBAppointmentDao implements IAppointmentDao {
     }
 
 }
-
-/*private final SimpleIntegerProperty appointmentId;
-    private final SimpleIntegerProperty customerId;
-    private final SimpleStringProperty title;
-    private final SimpleStringProperty description;
-    private final SimpleStringProperty location;
-    private final SimpleStringProperty contact;
-    private final SimpleStringProperty URL;
-    private final Date startDate;
-    private final Date endDate;*/
