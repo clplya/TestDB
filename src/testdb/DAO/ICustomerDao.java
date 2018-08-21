@@ -5,9 +5,10 @@ import java.util.ArrayList;
 
 public interface ICustomerDao {
 
+    boolean addCustomer(Customer customer);
+
     ArrayList<Customer> getAll();
 
     Customer getById(int Id);
 
-    boolean add(Customer customer);
 }

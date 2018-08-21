@@ -20,7 +20,7 @@ public class DBCustomerDao implements ICustomerDao {
     }
 
     @Override
-    public boolean add(Customer customer) {
+    public boolean addCustomer(Customer customer) {
         if (!allCustomers.contains(customer)) {
             allCustomers.add(customer);
             return true;
@@ -48,22 +48,20 @@ public class DBCustomerDao implements ICustomerDao {
     }
 
     @Override
-    public Customer getById(int Id) {
+    public Customer getById(int customerId) {
         Statement stmt;
-        selectedCustomer = null;
 
         try {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select c.customerId,c.customerName,a.address,a.phone from customer c join address a on c.addressId = a.addressId\n"
-                    + "where c.CustomerId = " + Id);
+            ResultSet rs = stmt.executeQuery("select c.customerId,c.customerName,a.address,a.phone from customer c join address a on c.addressId = a.addressId where c.CustomerId = " + customerId);
 
             if (rs.getRow() != 0) {
-                int customerId = rs.getInt(1);
+                int customerIdDB = rs.getInt(1);
                 String customerName = rs.getString(2);
                 String address = rs.getString(3);
                 String phone = rs.getString(4);
-                selectedCustomer = new Customer(customerId, customerName, address, phone);
+                selectedCustomer = new Customer(customerIdDB, customerName, address, phone);
             }
         } catch (SQLException ex) {
             System.out.println(ex);

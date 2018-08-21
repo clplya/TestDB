@@ -11,8 +11,8 @@ public class Main {
 
     public static void main(String[] args) {
         //First Part of the class checks Customer class methods
-        Customer printedCustomer;
         DBCustomerDao dbCustomer = new DBCustomerDao();
+
         ArrayList<Customer> customerList = dbCustomer.getAll();
 
         for (int i = 0; i < customerList.size(); i++) {
@@ -22,8 +22,10 @@ public class Main {
         Customer customer = dbCustomer.getById(1);
         System.out.println(customer);
 
-        boolean check = dbCustomer.add(customer);
+        Customer addedCustomer = new Customer(3, "Test Name", "101 Main St", "803-798-4565");
+        boolean check = dbCustomer.addCustomer(addedCustomer);
         System.out.println(check);
+        System.out.println(addedCustomer.getCustomerName());
 
         //Second part of the class checks the Appointment class methods
         DBAppointmentDao dbAppointment = new DBAppointmentDao();
@@ -34,8 +36,7 @@ public class Main {
         }
 
         Appointment customerAppointment = dbAppointment.getCustomerAppointment(1);
-        System.out.println(customerAppointment);
+        System.out.println(customerAppointment.getDescription());
 
     }
-
 }
