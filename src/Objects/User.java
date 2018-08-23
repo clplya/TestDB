@@ -5,9 +5,13 @@ public class User {
     private int userId;
     private String userName;
     private String password;
-    private int isActive;
+    private int active;
 
-    public User(int userId, String username, String password, int isActive) {
+    public User(int userId, String userName, String password, int active) {
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.active = active;
     }
 
     public int getUserId() {
@@ -34,12 +38,12 @@ public class User {
         this.password = password;
     }
 
-    public int getIsActive() {
-        return isActive;
+    public int getActive() {
+        return active;
     }
 
-    public void setIsActive(int isActive) {
-        this.isActive = isActive;
+    public void setActive(int active) {
+        this.active = active;
     }
 
 }

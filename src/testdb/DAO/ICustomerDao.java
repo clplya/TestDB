@@ -7,7 +7,7 @@ public interface ICustomerDao {
 
     boolean addCustomer(Customer customer);
 
-    ArrayList<Customer> getAll();
+    ArrayList<Customer> getAllCustomers();
 
     Customer getById(int Id);
 

@@ -8,7 +8,6 @@ import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class DBAddressDao implements IAddressDao {
 
@@ -37,7 +36,7 @@ public class DBAddressDao implements IAddressDao {
     }
 
     @Override
-    public ArrayList<Address> getAllAddresss() {
+    public ArrayList<Address> getAllAddresses() {
         Statement stmt;
 
         try {
@@ -61,16 +60,16 @@ public class DBAddressDao implements IAddressDao {
         try {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select a.addressId,c.customerId,a.title,a.description,a.location,a.contact,a.URL,a.`start`,a.`end` from customer c join address a on c.customerId = a.customerId\n"
-                    + "where c.customerId =" + customerId);
+            ResultSet rs = stmt.executeQuery("select a.addressId,a.address,a.address2,a.cityId,a.postalCode,a.phone from address a "
+                    + "join customer c on a.addressId = c.addressId where c.customerId =" + customerId);
 
             while (rs.next()) {
                 int addressId = rs.getInt(1);
                 String address1 = rs.getString(2);
                 String address2 = rs.getString(3);
                 int cityId = rs.getInt(4);
-                int postalCode = rs.getInt(5);
-                int phone = rs.getInt(6);
+                String postalCode = rs.getString(5);
+                String phone = rs.getString(6);
 
                 address = new Address(addressId, address1, address2, cityId, postalCode, phone);
             }

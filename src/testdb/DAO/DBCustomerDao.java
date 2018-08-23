@@ -21,15 +21,35 @@ public class DBCustomerDao implements ICustomerDao {
 
     @Override
     public boolean addCustomer(Customer customer) {
-        if (!allCustomers.contains(customer)) {
-            allCustomers.add(customer);
-            return true;
+        allCustomers.addAll(getAllCustomers());
+        for (int i = 0; i < allCustomers.size(); i++) {
+            allCustomers.get(i);
         }
-        return false;
+        if (allCustomers.contains(customer)) {
+            return false;
+        }
+        insertCustomer(customer);
+        //allCustomers.add(customer);
+        return true;
+    }
+
+    private void insertCustomer(Customer customer) {
+        Statement stmt;
+        int customerId = customer.getCustomerId();
+        String customerName = customer.getCustomerName();
+        String address = customer.getAddress();
+        String phone = customer.getPhone();
+        try {
+            Connection con = DataSource.getConnection();
+            stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
+            int insert = stmt.executeUpdate("insert into customer values (" + customerId + "," + customerName + ", " + address + "," + phone + ")");
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Override
-    public ArrayList<Customer> getAll() {
+    public ArrayList<Customer> getAllCustomers() {
         Statement stmt;
         allCustomers.clear();
 

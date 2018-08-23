@@ -9,7 +9,7 @@ public interface IAddressDao {
 
     void deleteAddress(Address address);
 
-    ArrayList<Address> getAllAddresss();
+    ArrayList<Address> getAllAddresses();
 
     Address getCustomerAddress(int customerId);
 

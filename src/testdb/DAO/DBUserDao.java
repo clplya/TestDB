@@ -42,7 +42,7 @@ public class DBUserDao implements IUserDao {
         try {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select * from user");
+            ResultSet rs = stmt.executeQuery("select userId,userName,password,active from user");
 
             while (rs.next()) {
                 userList.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
@@ -60,15 +60,15 @@ public class DBUserDao implements IUserDao {
         try {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select * from user where userId = " + userId);
+            ResultSet rs = stmt.executeQuery("select userId,userName,password,active from user where userId =" + userId);
 
             while (rs.next()) {
                 int userID = rs.getInt(1);
-                String username = rs.getString(2);
+                String userName = rs.getString(2);
                 String password = rs.getString(3);
-                int isActive = rs.getInt(4);
+                int active = rs.getInt(4);
 
-                user = new User(userID, username, password, isActive);
+                user = new User(userID, userName, password, active);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
