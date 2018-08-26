@@ -1,58 +1,41 @@
 package Objects;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 public class Customer {
 
-    private final SimpleIntegerProperty customerId;
-    private final SimpleStringProperty customerName;
-    private final SimpleStringProperty address;
-    private final SimpleStringProperty phone;
+    private int customerId;
+    private String customerName;
+    private String address;
+    private String phone;
 
     public Customer(int customerId, String customerName, String address, String phone) {
-        this.customerId = new SimpleIntegerProperty(customerId);
-        this.customerName = new SimpleStringProperty(customerName);
-        this.address = new SimpleStringProperty(address);
-        this.phone = new SimpleStringProperty(phone);
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.address = address;
+        this.phone = phone;
     }
 
     public int getCustomerId() {
-        return customerId.get();
+        return customerId;
     }
 
     public void setCustomerId(int customerId) {
-        this.customerId.set(customerId);
-    }
-
-    public IntegerProperty customerIdProperty() {
-        return this.customerId;
+        this.customerId = customerId;
     }
 
     public String getCustomerName() {
-        return customerName.get();
+        return customerName;
     }
 
     public void setCustomerName(String customerName) {
-        this.customerName.set(customerName);
-    }
-
-    public StringProperty customerNameProperty() {
-        return this.customerName;
+        this.customerName = customerName;
     }
 
     public String getAddress() {
-        return address.get();
+        return address;
     }
 
     public void setAddress(String address) {
-        this.address.set(address);
-    }
-
-    public StringProperty addressProperty() {
-        return this.address;
+        this.address = address;
     }
 
 //    public int getActive() {
@@ -63,14 +46,10 @@ public class Customer {
 //        this.active = active;
 //    }    
     public String getPhone() {
-        return phone.get();
+        return phone;
     }
 
     public void setPhone(String phone) {
-        this.phone.set(phone);
-    }
+        this.phone = phone;
+    }                                                                                                                                                                                                                                                 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 
-    public StringProperty phoneProperty() {
-        return this.phone;
-    }
-}

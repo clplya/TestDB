@@ -23,10 +23,10 @@ public class Main {
             System.out.println(customerList.get(i).getCustomerName());
         }
 
-        Customer customer = dbCustomer.getById(1);
+        Customer customer = customerList.
         System.out.println(customer);
 
-        Customer addedCustomer = new Customer(3, "Test Name", "101 Main St", "803-798-4565");
+      Customer addedCustomer = new Customer(3, "Test Name", "101 Main St", "803-798-4565");
         boolean check = dbCustomer.addCustomer(addedCustomer);
         System.out.println(check);
         System.out.println(addedCustomer.getCustomerName());
