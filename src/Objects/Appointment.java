@@ -9,7 +9,6 @@ import java.util.Date;
 public class Appointment {
 
     private final SimpleIntegerProperty appointmentId;
-    private final SimpleIntegerProperty customerId;
     private final SimpleStringProperty title;
     private final SimpleStringProperty description;
     private final SimpleStringProperty location;
@@ -18,10 +17,9 @@ public class Appointment {
     private final Date startDate;
     private final Date endDate;
 
-    public Appointment(int appointmentId, int customerId, String title, String description, String location,
-            String contact, String URL, Date startDate, Date endDate) {
+    public Appointment(int appointmentId, String title, String description, String location,
+                       String contact, String URL, Date startDate, Date endDate) {
         this.appointmentId = new SimpleIntegerProperty(appointmentId);
-        this.customerId = new SimpleIntegerProperty(customerId);
         this.title = new SimpleStringProperty(title);
         this.description = new SimpleStringProperty(description);
         this.location = new SimpleStringProperty(location);
@@ -41,18 +39,6 @@ public class Appointment {
 
     public IntegerProperty appointmentIdProperty() {
         return this.appointmentId;
-    }
-
-    public int getCustomerId() {
-        return customerId.get();
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId.set(customerId);
-    }
-
-    public IntegerProperty customerIdProperty() {
-        return this.customerId;
     }
 
     public String getTitle() {

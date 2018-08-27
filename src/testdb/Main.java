@@ -28,7 +28,7 @@ public class Main {
             System.out.println(dbCustomer.getById(i));
         }
             
-      Customer addedCustomer = new Customer(3, "Test Name", "101 Main St", "803-798-4565");
+      Customer addedCustomer = new Customer(3, "Test Name");
         boolean check = dbCustomer.addCustomer(addedCustomer);
         System.out.println(check);
         System.out.println(addedCustomer.getCustomerName());

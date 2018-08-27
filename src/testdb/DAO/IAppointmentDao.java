@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public interface IAppointmentDao {
 
-    public boolean addAppointment(Appointment appointment);
+    public Appointment createAppointment(Appointment appointment);
 
     public void deleteAppointment(Appointment appointment);
 

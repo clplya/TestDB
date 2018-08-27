@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import static testdb.SQLStatements.selectAllCustomers;
+import static testdb.SQLStatements.selectCustomerById;
 
 public class DBCustomerDao implements ICustomerDao {
 
@@ -38,12 +40,10 @@ public class DBCustomerDao implements ICustomerDao {
         Statement stmt;
         int customerId = customer.getCustomerId();
         String customerName = customer.getCustomerName();
-        String address = customer.getAddress();
-        String phone = customer.getPhone();
         try {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            stmt.executeUpdate("insert into customer values (" + customerId + "," + customerName + ", " + address + "," + phone + ")");
+            stmt.executeUpdate("insert into customer values (" + customerId + "," + customerName + ")");
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -57,10 +57,10 @@ public class DBCustomerDao implements ICustomerDao {
         try {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select * from customer");
+            ResultSet rs = stmt.executeQuery(selectAllCustomers());
 
             while (rs.next()) {
-                allCustomers.add(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+                allCustomers.add(new Customer(rs.getInt(1), rs.getString(2)));
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -75,14 +75,12 @@ public class DBCustomerDao implements ICustomerDao {
         try {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select c.customerId,c.customerName,a.address,a.phone from customer c join address a on c.addressId = a.addressId where c.CustomerId = " + customerId);
+            ResultSet rs = stmt.executeQuery(selectCustomerById() + customerId);
 
             if (rs.getRow() != 0) {
                 int customerIdDB = rs.getInt(1);
                 String customerName = rs.getString(2);
-                String address = rs.getString(3);
-                String phone = rs.getString(4);
-                selectedCustomer = new Customer(customerIdDB, customerName, address, phone);
+                selectedCustomer = new Customer(customerIdDB, customerName);
             }
         } catch (SQLException ex) {
             System.out.println(ex);

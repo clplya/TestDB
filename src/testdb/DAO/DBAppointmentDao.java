@@ -9,12 +9,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.rowset.JdbcRowSet;
+import static testdb.SQLStatements.selectAllAppointments;
+import static testdb.SQLStatements.selectAppointmentById;
 
 public class DBAppointmentDao implements IAppointmentDao {
 
     private Appointment appointment;
     private final ArrayList<Appointment> appointmentList;
     private final ArrayList<Appointment> finalAppointmentList;
+    private JdbcRowSet rowSet = null;
 
     public DBAppointmentDao() {
         appointmentList = new ArrayList<>();
@@ -23,12 +29,17 @@ public class DBAppointmentDao implements IAppointmentDao {
     }
 
     @Override
-    public boolean addAppointment(Appointment appointment) {
+    public Appointment createAppointment(Appointment a) {
+        try {
+            rowSet.moveToInsertRow();
+            rowSet.updateInt("appointmentId", a.getAppointmentId());
+        } catch (SQLException ex) {
+            Logger.getLogger(DBAppointmentDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (appointmentList.contains(appointment)) {
             finalAppointmentList.add(appointment);
-            return true;
         }
-        return false;
+        return a;
     }
 
     @Override
@@ -43,10 +54,10 @@ public class DBAppointmentDao implements IAppointmentDao {
         try {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select * from appointment");
+            ResultSet rs = stmt.executeQuery(selectAllAppointments());
 
             while (rs.next()) {
-                appointmentList.add(new Appointment(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9)));
+                appointmentList.add(new Appointment(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7), rs.getDate(8)));
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -61,21 +72,19 @@ public class DBAppointmentDao implements IAppointmentDao {
         try {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select a.appointmentId,c.customerId,a.title,a.description,a.location,a.contact,a.URL,a.`start`,a.`end` from customer c join appointment a on c.customerId = a.customerId\n"
-                    + "where c.customerId =" + customerId);
+            ResultSet rs = stmt.executeQuery(selectAppointmentById() + customerId);
 
             while (rs.next()) {
                 int appointmentId = rs.getInt(1);
-                int custId = rs.getInt(2);
-                String title = rs.getString(3);
-                String description = rs.getString(4);
-                String location = rs.getString(5);
-                String contact = rs.getString(6);
-                String URL = rs.getString(7);
-                Date startDate = rs.getDate(8);
-                Date endDate = rs.getDate(9);
+                String title = rs.getString(2);
+                String description = rs.getString(3);
+                String location = rs.getString(4);
+                String contact = rs.getString(5);
+                String URL = rs.getString(6);
+                Date startDate = rs.getDate(7);
+                Date endDate = rs.getDate(8);
 
-                appointment = new Appointment(appointmentId, custId, title, description, location, contact, URL, startDate, endDate);
+                appointment = new Appointment(appointmentId, title, description, location, contact, URL, startDate, endDate);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -97,7 +106,7 @@ public class DBAppointmentDao implements IAppointmentDao {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
             ResultSet rs = stmt.executeQuery("select a.appointmentId,c.customerId,a.title,a.description,a.location,a.contact,a.URL,a.`start`,a.`end` from customer c join appointment a on c.customerId = a.customerId\n"
-                    + "where c.customerId =" + appointmentId);
+                                             + "where c.customerId =" + appointmentId);
 
             while (rs.next()) {
 
