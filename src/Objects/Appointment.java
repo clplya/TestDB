@@ -1,104 +1,78 @@
 package Objects;
 
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import java.util.Date;
 
 public class Appointment {
 
-    private final SimpleIntegerProperty appointmentId;
-    private final SimpleStringProperty title;
-    private final SimpleStringProperty description;
-    private final SimpleStringProperty location;
-    private final SimpleStringProperty contact;
-    private final SimpleStringProperty URL;
-    private final Date startDate;
-    private final Date endDate;
+    private int appointmentId;
+    private String title;
+    private String description ;
+    private String location;
+    private String contact;
+    private String URL;
+    private Date startDate;
+    private Date endDate;
 
     public Appointment(int appointmentId, String title, String description, String location,
-                       String contact, String URL, Date startDate, Date endDate) {
-        this.appointmentId = new SimpleIntegerProperty(appointmentId);
-        this.title = new SimpleStringProperty(title);
-        this.description = new SimpleStringProperty(description);
-        this.location = new SimpleStringProperty(location);
-        this.contact = new SimpleStringProperty(contact);
-        this.URL = new SimpleStringProperty(URL);
-        this.startDate = new Date();
-        this.endDate = new Date();
+            String contact, String URL, Date startDate, Date endDate) {
+        this.appointmentId = appointmentId;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.contact = contact;
+        this.URL = URL;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public int getAppointmentId() {
-        return appointmentId.get();
+        return appointmentId;
     }
 
     public void setAppointmentId(int appointmentId) {
-        this.appointmentId.set(appointmentId);
-    }
-
-    public IntegerProperty appointmentIdProperty() {
-        return this.appointmentId;
+        this.appointmentId = appointmentId;
     }
 
     public String getTitle() {
-        return title.get();
+        return title;
     }
 
     public void setTitle(String title) {
-        this.title.set(title);
-    }
-
-    public StringProperty titleProperty() {
-        return this.title;
+        this.title = title;
     }
 
     public String getDescription() {
-        return description.get();
+        return description;
     }
 
     public void setDescription(String description) {
-        this.description.set(description);
-    }
-
-    public StringProperty descriptionProperty() {
-        return this.description;
+        this.description = description;
     }
 
     public String getLocation() {
-        return location.get();
+        return location;
     }
 
     public void setLocation(String location) {
-        this.location.set(location);
-    }
-
-    public StringProperty locationProperty() {
-        return this.location;
+        this.location =location;
     }
 
     public String getContact() {
-        return contact.get();
+        return contact;
     }
 
     public void setContact(String contact) {
-        this.contact.set(contact);
-    }
-
-    public StringProperty contactProperty() {
-        return this.contact;
+        this.contact = contact;
     }
 
     public String getURL() {
-        return URL.get();
+        return URL;
     }
 
     public void setURL(String URL) {
-        this.URL.set(URL);
-    }
-
-    public StringProperty URLProperty() {
-        return this.URL;
+        this.URL = URL;
     }
 
     public Date getStartDate() {
