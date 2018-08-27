@@ -5,15 +5,15 @@ import java.util.ArrayList;
 
 public interface IAppointmentDao {
 
-    boolean addAppointment(Appointment appointment);
+    public boolean addAppointment(Appointment appointment);
 
-    void deleteAppointment(Appointment appointment);
+    public void deleteAppointment(Appointment appointment);
 
-    ArrayList<Appointment> getAllAppointments();
+    public ArrayList<Appointment> getAllAppointments();
 
-    Appointment getCustomerAppointment(int customerId);
+    public Appointment getCustomerAppointment(int customerId);
 
-    void updateAppointment(Appointment oldAppointment, Appointment updatedAppointment);
+    public void updateAppointment(Appointment oldAppointment, Appointment updatedAppointment);
 
-    void updateAppointmentInfo(int appointmentId);
+    public void updateAppointmentInfo(int appointmentId);
 }

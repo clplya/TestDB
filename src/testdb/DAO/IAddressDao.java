@@ -5,15 +5,15 @@ import java.util.ArrayList;
 
 public interface IAddressDao {
 
-    boolean addAddress(Address address);
+    public boolean addAddress(Address address);
 
-    void deleteAddress(Address address);
+    public void deleteAddress(Address address);
 
-    ArrayList<Address> getAllAddresses();
+    public ArrayList<Address> getAllAddresses();
 
-    Address getCustomerAddress(int customerId);
+    public Address getCustomerAddress(int customerId);
 
-    void updateAddress(Address oldAddress, Address updatedAddress);
+    public void updateAddress(Address oldAddress, Address updatedAddress);
 
-    void updateAddressInfo(int addressId);
+    public void updateAddressInfo(int addressId);
 }

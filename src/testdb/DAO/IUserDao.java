@@ -5,15 +5,15 @@ import java.util.ArrayList;
 
 public interface IUserDao {
 
-    boolean addUser(User user);
+    public boolean addUser(User user);
 
-    void deleteUser(User user);
+    public void deleteUser(User user);
 
-    ArrayList<User> getAllUsers();
+    public ArrayList<User> getAllUsers();
 
-    User getUser(int userId);
+    public User getUser(int userId);
 
-    void updateUser(User oldUser, User updatedUser);
+    public void updateUser(User oldUser, User updatedUser);
 
-    void updateUserInfo(int userId);
+    public void updateUserInfo(int userId);
 }

@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public interface ICustomerDao {
 
-    boolean addCustomer(Customer customer);
+    public boolean addCustomer(Customer customer);
 
-    ArrayList<Customer> getAllCustomers();
+    public ArrayList<Customer> getAllCustomers();
 
-    Customer getById(int Id);
+    public Customer getById(int Id);
 
 }

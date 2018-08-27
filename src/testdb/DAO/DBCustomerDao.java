@@ -8,11 +8,12 @@ import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBCustomerDao implements ICustomerDao {
 
-    private final ArrayList<Customer> allCustomers;
-    private Customer selectedCustomer;
+    List<Customer> allCustomers;
+    Customer selectedCustomer;
 
     public DBCustomerDao() {
         allCustomers = new ArrayList<>();
@@ -42,7 +43,7 @@ public class DBCustomerDao implements ICustomerDao {
         try {
             Connection con = DataSource.getConnection();
             stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            int insert = stmt.executeUpdate("insert into customer values (" + customerId + "," + customerName + ", " + address + "," + phone + ")");
+            stmt.executeUpdate("insert into customer values (" + customerId + "," + customerName + ", " + address + "," + phone + ")");
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -64,7 +65,7 @@ public class DBCustomerDao implements ICustomerDao {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        return allCustomers;
+        return (ArrayList<Customer>) allCustomers;
     }
 
     @Override
@@ -96,4 +97,5 @@ public class DBCustomerDao implements ICustomerDao {
 //        return null;
     }
 
+    
 }

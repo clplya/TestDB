@@ -22,10 +22,12 @@ public class Main {
         for (int i = 0; i < customerList.size(); i++) {
             System.out.println(customerList.get(i).getCustomerName());
         }
-
-        Customer customer = customerList.
-        System.out.println(customer);
-
+        customerList.forEach(System.out::println);
+         
+        for (int i = 0; i < customerList.size(); i++) {
+            System.out.println(dbCustomer.getById(i));
+        }
+            
       Customer addedCustomer = new Customer(3, "Test Name", "101 Main St", "803-798-4565");
         boolean check = dbCustomer.addCustomer(addedCustomer);
         System.out.println(check);

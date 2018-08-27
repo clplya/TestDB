@@ -1,4 +1,6 @@
-public class ArrayStructures {
+package algorithms;
+
+public class ArrayStructure {
 	
 	private int[] theArray = new int[50]; // Creates an array with 50 indexes
 	
@@ -168,7 +170,7 @@ public class ArrayStructures {
 				
 				if(theArray[j] > theArray[j + 1]){
 					
-					swapValues(j, j+1);
+				//	swapValues(j, j+1);
 					
 				}
 				
@@ -180,7 +182,7 @@ public class ArrayStructures {
 	
 	public static void main(String[] args){
 		
-		ArrayStructures newArray = new ArrayStructures();
+		ArrayStructure newArray = new ArrayStructure();
 		
 		newArray.generateRandomArray();
 		
