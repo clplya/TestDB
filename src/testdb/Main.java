@@ -18,7 +18,8 @@ public class Main {
         DBCustomerDao dbCustomer = new DBCustomerDao();
 
         ArrayList<Customer> customerList = dbCustomer.getAllCustomers();
-
+        
+       
         for (int i = 0; i < customerList.size(); i++) {
             System.out.println(customerList.get(i).getCustomerName());
         }
@@ -56,7 +57,11 @@ public class Main {
         System.out.println(customerAddress.getAddress());
         //Fourth part of the class checks the User class methods
         DBUserDao dbUser = new DBUserDao();
-        ArrayList<User> userList = dbUser.getAllUsers();
+       
+         ArrayList<User> userList = dbUser.selectAllUsers(con, dbName);
+        
+
+// ArrayList<User> userList = dbUser.getAllUsers();
 
         for (int i = 0; i < userList.size(); i++) {
             System.out.println((userList.get(i).getUserName()));

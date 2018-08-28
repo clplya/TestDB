@@ -22,6 +22,28 @@ public class DBUserDao implements IUserDao {
         user = null;
     }
 
+    public void selectAllUsers(Connection con, String dbName)
+            throws SQLException {
+        Statement stmt = null;
+
+        String query
+                = "select * from Users";
+
+        try {
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+
     @Override
     public boolean addUser(User user) {
         if (userList.contains(user)) {
@@ -38,7 +60,7 @@ public class DBUserDao implements IUserDao {
 
     @Override
     public ArrayList<User> getAllUsers() {
-        Statement stmt;
+        Statement stmt = null;
 
         try {
             Connection conn = DataSource.getConnection();
@@ -48,28 +70,42 @@ public class DBUserDao implements IUserDao {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                // userList.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
-                Object userIdField = rs.getObject("id");
-                Object userNameField = rs.getObject("name");
+                int customerId = rs.getInt(1);
+                String userName = rs.getString(2);
+                String password = rs.getString(3);
+                int active = rs.getInt(4);
+
+                user = new User(customerId, userName, password, active);
+                userList.add(user);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            }
+
         }
         return userList;
     }
 
     @Override
     public User getUser(int userId) {
-        //Statement stmt;
+        Statement stmt;
 
         try {
             Connection conn = DataSource.getConnection();
-            //stmt = conn.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            //ResultSet rs = stmt.executeQuery("select userId,userName,password,active from user where userId =" + userId);
+            stmt = conn.createStatement();
+            
+            ResultSet rs = stmt.executeQuery("select userId,userName,password,active from user where userId =" + userId);
 
-            PreparedStatement ps = conn.prepareStatement("select userId,userName,password,active from user where userId = ?");
-            ps.setString(userId, user);
-            ps.execute();
+//            PreparedStatement ps = conn.prepareStatement("select userId,userName,password,active from user where userId = ?");
+//            ps.setString(userId, user);
+//            ps.execute();
 
             while (rs.next()) {
                 int userID = rs.getInt(1);
