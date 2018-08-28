@@ -32,7 +32,6 @@ public class DBCustomerDao implements ICustomerDao {
             return false;
         }
         insertCustomer(customer);
-        //allCustomers.add(customer);
         return true;
     }
 
@@ -60,7 +59,7 @@ public class DBCustomerDao implements ICustomerDao {
             ResultSet rs = stmt.executeQuery(selectAllCustomers());
 
             while (rs.next()) {
-                allCustomers.add(new Customer(rs.getInt(1), rs.getString(2)));
+                allCustomers.add(new Customer(rs.getInt(1), rs.getString(2), rs.getInt(3)));
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -80,7 +79,8 @@ public class DBCustomerDao implements ICustomerDao {
             if (rs.getRow() != 0) {
                 int customerIdDB = rs.getInt(1);
                 String customerName = rs.getString(2);
-                selectedCustomer = new Customer(customerIdDB, customerName);
+                int active = rs.getInt(3);
+                selectedCustomer = new Customer(customerIdDB, customerName, active);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -95,5 +95,4 @@ public class DBCustomerDao implements ICustomerDao {
 //        return null;
     }
 
-    
 }

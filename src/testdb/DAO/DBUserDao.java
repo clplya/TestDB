@@ -2,6 +2,7 @@ package testdb.DAO;
 
 import Objects.User;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import static java.sql.ResultSet.CONCUR_READ_ONLY;
 import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
@@ -40,12 +41,16 @@ public class DBUserDao implements IUserDao {
         Statement stmt;
 
         try {
-            Connection con = DataSource.getConnection();
-            stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select userId,userName,password,active from user");
+            Connection conn = DataSource.getConnection();
+
+            stmt = conn.createStatement();
+            String sql = "select userId,userName,password,active from user";
+            ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                userList.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
+                // userList.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
+                Object userIdField = rs.getObject("id");
+                Object userNameField = rs.getObject("name");
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -55,12 +60,16 @@ public class DBUserDao implements IUserDao {
 
     @Override
     public User getUser(int userId) {
-        Statement stmt;
+        //Statement stmt;
 
         try {
-            Connection con = DataSource.getConnection();
-            stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select userId,userName,password,active from user where userId =" + userId);
+            Connection conn = DataSource.getConnection();
+            //stmt = conn.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
+            //ResultSet rs = stmt.executeQuery("select userId,userName,password,active from user where userId =" + userId);
+
+            PreparedStatement ps = conn.prepareStatement("select userId,userName,password,active from user where userId = ?");
+            ps.setString(userId, user);
+            ps.execute();
 
             while (rs.next()) {
                 int userID = rs.getInt(1);
@@ -78,17 +87,27 @@ public class DBUserDao implements IUserDao {
 
     @Override
     public void updateUser(User oldUser, User updatedUser) {
+        Statement stmt;
 
+        try {
+            Connection conn = DataSource.getConnection();
+            stmt = conn.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
+            int result = stmt.executeUpdate(
+                    "insert into User values (4, 'test', 'password', 1)");
+            System.out.println(result);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Override
     public void updateUserInfo(int userId) {
-        User user = getUser(userId);
+        User updatedUser = getUser(userId);
         Statement stmt;
 
         try {
-            Connection con = DataSource.getConnection();
-            stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
+            Connection conn = DataSource.getConnection();
+            stmt = conn.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
             ResultSet rs = stmt.executeQuery("select a.userId,c.customerId,a.title,a.description,a.location,a.contact,a.URL,a.`start`,a.`end` from customer c join user a on c.customerId = a.customerId\n"
                     + "where c.customerId =" + userId);
 
@@ -101,3 +120,32 @@ public class DBUserDao implements IUserDao {
 
     }
 }
+
+/* Use below to compare password entry to DB values
+import java.io.*;
+import java.util.Arrays;
+
+public class PasswordCompareSample {
+   public static void main(String[] args) throws NumberFormatException, IOException {
+      Console console = System.console();
+      if(console == null) {
+         throw new RuntimeException("Console not available");
+      } else {
+         char[] password = console.readPassword("Enter your password: ");
+         console.format("Enter your password again:  ");
+         console.flush();
+         char[] verify = console.readPassword();
+         boolean match = Arrays.equals(password,verify);
+
+         // Immediately clear passwords from memory
+         for(int i=0; i<password.length; i++) {
+            password[i]='x';
+         }
+         for(int i=0; i<verify.length; i++) {
+            verify[i]='x';
+         }
+
+         console.format("Your password was "+(match ? "correct": "incorrect"));
+      }
+   }
+}*/

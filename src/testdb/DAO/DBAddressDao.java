@@ -45,7 +45,7 @@ public class DBAddressDao implements IAddressDao {
             ResultSet rs = stmt.executeQuery("select * from address");
 
             while (rs.next()) {
-                addressList.add(new Address(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6)));
+                addressList.add(new Address(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -67,11 +67,10 @@ public class DBAddressDao implements IAddressDao {
                 int addressId = rs.getInt(1);
                 String address1 = rs.getString(2);
                 String address2 = rs.getString(3);
-                int cityId = rs.getInt(4);
-                String postalCode = rs.getString(5);
-                String phone = rs.getString(6);
+                String postalCode = rs.getString(4);
+                String phone = rs.getString(5);
 
-                address = new Address(addressId, address1, address2, cityId, postalCode, phone);
+                address = new Address(addressId, address1, address2, postalCode, phone);
             }
         } catch (SQLException ex) {
             System.out.println(ex);

@@ -1,14 +1,12 @@
 package Objects;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
 import java.util.Date;
 
 public class Appointment {
 
     private int appointmentId;
     private String title;
-    private String description ;
+    private String description;
     private String location;
     private String contact;
     private String URL;
@@ -56,7 +54,7 @@ public class Appointment {
     }
 
     public void setLocation(String location) {
-        this.location =location;
+        this.location = location;
     }
 
     public String getContact() {
@@ -79,16 +77,16 @@ public class Appointment {
         return startDate;
     }
 
-    public void setStartDate(Date sDate) {
-        this.startDate.setTime(sDate.getTime());
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date eDate) {
-        this.endDate.setTime(eDate.getTime());
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
 }
