@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public interface IUserDao {
 
-    public boolean addUser(User user);
+    public void addUser(User user);
 
     public void deleteUser(User user);
 

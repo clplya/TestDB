@@ -3,10 +3,6 @@ package testdb.DAO;
 import java.sql.*;
 import java.sql.Connection;
 
-/**
- *
- * @author clply_000
- */
 public class DataSource {
 
     private final static String URL = "jdbc:mysql://52.206.157.109:3306/U03xBv";
