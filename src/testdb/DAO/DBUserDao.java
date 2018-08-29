@@ -24,30 +24,37 @@ public class DBUserDao implements IUserDao {
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(int userId, String userName, String password, int active) {
         Statement stmt = null;
-
-        int userId = user.getUserId();
-        String userName = user.getUserName();
-        String password = user.getPassword();
-        int active = user.getActive();
 
         try {
             Connection conn = DataSource.getConnection();
 
             stmt = conn.createStatement();
-            String sql = "insert into User values (" + userId + "," + userName + "," + password + "," + active + ")";
+            String sql = "insert into user(userId,userName,password,active,createBy,createDate,lastUpdatedBy) values (" + userId + ",'" + userName + "','" + password + "'," + active + ",1,now(),1)";
             int result = stmt.executeUpdate(sql);
-            System.out.println("Inserting a new record: " + result);
+            System.out.println("Inserting number of records: " + result);
 
         } catch (SQLException ex) {
-            System.out.println("SQLException ex");
+            System.out.println(ex);
         }
     }
 
     @Override
-    public void deleteUser(User deletedUser) {
+    public void deleteUser(int deletedUserId) {
+        Statement stmt = null;
 
+        try {
+            Connection conn = DataSource.getConnection();
+
+            stmt = conn.createStatement();
+            String sql = "delete from user where userId="+deletedUserId;
+            int result = stmt.executeUpdate(sql);
+            System.out.println("Deleting number of records: " + result);
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Override

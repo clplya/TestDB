@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public interface IUserDao {
 
-    public void addUser(User user);
+    public void addUser(int userId, String userName, String password, int active);
 
-    public void deleteUser(User user);
+    public void deleteUser(int deletedUserId);
 
     public ArrayList<User> getAllUsers();
 
