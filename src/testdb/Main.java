@@ -47,35 +47,40 @@ public class Main {
         //     Address customerAddress = dbAddress.getCustomerAddress(1);
         // System.out.println(customerAddress.getAddress());
         //Fourth part of the class checks the User class methods
-        
         // System.out.println(user.getUserName());
         //Second part of the class checks the Appointment class methods
     }
-    
-    private static void usersMethods(){
+
+    private static void usersMethods() {
         DBUserDao dbUser = new DBUserDao();
-        
+
 //get all users
         ArrayList<User> userList = dbUser.getAllUsers();
 
         for (int i = 0; i < userList.size(); i++) {
-            System.out.println((userList.get(i).getUserName()));
+            System.out.println((userList.get(i).getUserName()));  //first & second print
         }
 //get single user
-                User getUser = dbUser.getUser(1);
-                System.out.println(getUser.getUserName());
+        User getUser = dbUser.getUser(1);
+        System.out.println(getUser.getUserName());
 
 //get all & delete user if found
-            boolean userPresent = false;
-            User deletedUser;
-            if(userPresent = true){
-                dbUser.deleteUser(deletedUser.getUserId());
-            dbUser.addUser(4,"test","test",1);
+        boolean userPresent = false;
+        //int presentUserId = userList.get()
+
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getUserId() == 4) {
+                userPresent = true;
+            }
+        }
+
+        if (userPresent != true) {
+            dbUser.deleteUser(4);
+            dbUser.addUser(4, "test", "test", 1);
             User getAddedUser = dbUser.getUser(4);
-                System.out.println(getAddedUser.getUserName());
-            }
-            else{
-                System.out.println("User present");
-            }
+            System.out.println(getAddedUser.getUserName());
+        } else {
+            System.out.println("User present");
+        }
     }
 }
