@@ -15,27 +15,27 @@ public class Main {
 
     public static void main(String[] args) {
         usersMethods();
-        //First Part of the class checks Customer class methods
-        //   DBCustomerDao dbCustomer = new DBCustomerDao();
+        // First Part of the class checks Customer class methods
+        DBCustomerDao dbCustomer = new DBCustomerDao();
 
-        // ArrayList<Customer> customerList = dbCustomer.getAllCustomers();
-//        for (int i = 0; i < customerList.size(); i++) {
-//            System.out.println(customerList.get(i).getCustomerName());
-//        }
-        //   customerList.forEach(System.out::println);
-//        for (int i = 0; i < customerList.size(); i++) {
-//            System.out.println(dbCustomer.getById(i));
-//        }
-        //     Customer addedCustomer = new Customer(3, "Test Name", 1);
-        //  boolean check = dbCustomer.addCustomer(addedCustomer);
-//        System.out.println(check);
-//        System.out.println(addedCustomer.getCustomerName());
-        //Second part of the class checks the Appointment class methods
-        //   DBAppointmentDao dbAppointment = new DBAppointmentDao();
-//        ArrayList<Appointment> appointmentList = dbAppointment.getAllAppointments();
-//        for (int i = 0; i < appointmentList.size(); i++) {
-//            System.out.println((appointmentList.get(i).getTitle()));
-//        }
+        ArrayList<Customer> customerList = dbCustomer.getAllCustomers();
+        for (int i = 0; i < customerList.size(); i++) {
+            System.out.println(customerList.get(i).getCustomerName());
+        }
+        customerList.forEach(System.out::println);
+        for (int i = 0; i < customerList.size(); i++) {
+            System.out.println(dbCustomer.getById(i));
+        }
+        Customer addedCustomer = new Customer(3, "Test Name", 1);
+        boolean check = dbCustomer.addCustomer(addedCustomer);
+        System.out.println(check);
+        System.out.println(addedCustomer.getCustomerName());
+        // Second part of the class checks the Appointment class methods
+        //DBAppointmentDao dbAppointment = new DBAppointmentDao();
+        //ArrayList<Appointment> appointmentList = dbAppointment.getAllAppointments();
+        //for (int i = 0; i < appointmentList.size(); i++) {
+        //  System.out.println((appointmentList.get(i).getTitle()));
+        //}
         //      Appointment customerAppointment = dbAppointment.getCustomerAppointment(1);
         //  System.out.println(customerAppointment.getDescription());
         //Third part of the class checks the Address class methods
@@ -74,7 +74,7 @@ public class Main {
             }
         }
 
-        if (userPresent != true) {
+        if (userPresent == true) {
             dbUser.deleteUser(4);
             dbUser.addUser(4, "test", "test", 1);
             User getAddedUser = dbUser.getUser(4);

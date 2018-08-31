@@ -8,7 +8,6 @@ import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class DBUserDao implements IUserDao {
 
@@ -48,7 +47,7 @@ public class DBUserDao implements IUserDao {
             Connection conn = DataSource.getConnection();
 
             stmt = conn.createStatement();
-            String sql = "delete from user where userId="+deletedUserId;
+            String sql = "delete from user where userId=" + deletedUserId;
             int result = stmt.executeUpdate(sql);
             System.out.println("Deleting number of records: " + result);
 
