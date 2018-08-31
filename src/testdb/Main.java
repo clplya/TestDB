@@ -14,22 +14,9 @@ public class Main {
 //when adding users- check out pg 427 on lambda expressions to sort a collection for authorization
 
     public static void main(String[] args) {
-        usersMethods();
-        // First Part of the class checks Customer class methods
-        DBCustomerDao dbCustomer = new DBCustomerDao();
-
-        ArrayList<Customer> customerList = dbCustomer.getAllCustomers();
-        for (int i = 0; i < customerList.size(); i++) {
-            System.out.println(customerList.get(i).getCustomerName());
-        }
-        customerList.forEach(System.out::println);
-        for (int i = 0; i < customerList.size(); i++) {
-            System.out.println(dbCustomer.getById(i));
-        }
-        Customer addedCustomer = new Customer(3, "Test Name", 1);
-        boolean check = dbCustomer.addCustomer(addedCustomer);
-        System.out.println(check);
-        System.out.println(addedCustomer.getCustomerName());
+        customerMethods();
+        userMethods();
+        
         // Second part of the class checks the Appointment class methods
         //DBAppointmentDao dbAppointment = new DBAppointmentDao();
         //ArrayList<Appointment> appointmentList = dbAppointment.getAllAppointments();
@@ -50,8 +37,48 @@ public class Main {
         // System.out.println(user.getUserName());
         //Second part of the class checks the Appointment class methods
     }
+    
+    //CUSTOMER METHODS
+    private static void customerMethods() {
+        DBCustomerDao dbCustomer = new DBCustomerDao();
 
-    private static void usersMethods() {
+//get all customers
+        ArrayList<Customer> customerList = dbCustomer.getAllCustomers();
+
+        for (int i = 0; i < customerList.size(); i++) {
+            System.out.println((customerList.get(i).getCustomerName()));  //first & second print
+        }
+//get single customer
+        Customer getCustomer = dbCustomer.getCustomer(1);
+        System.out.println(getCustomer.getCustomerName());
+
+//get all & delete customer if found
+        boolean customerPresent = false;
+        //int presentCustomerId = customerList.get()
+
+        for (int i = 0; i < customerList.size(); i++) {
+            if (customerList.get(i).getCustomerId() == 4) {
+                customerPresent = true;
+            }
+        }
+
+        if (customerPresent == true) { //customer present
+            dbCustomer.deleteCustomer(4);
+            System.out.println("Customer present");
+            dbCustomer.addCustomer(4, "test", 1,1);
+            Customer addedCustomer = dbCustomer.getCustomer(4);
+            System.out.println(addedCustomer.getCustomerName());
+        } else { //Customer not present
+            System.out.println("Customer not present");
+            dbCustomer.addCustomer(4, "test", 1,1);
+            Customer addedCustomer = dbCustomer.getCustomer(4);
+            System.out.println(addedCustomer.getCustomerName());
+        }
+    }
+
+    
+    //USER METHODS
+    private static void userMethods() {
         DBUserDao dbUser = new DBUserDao();
 
 //get all users
@@ -76,11 +103,15 @@ public class Main {
 
         if (userPresent == true) {
             dbUser.deleteUser(4);
+            System.out.println("User present");
             dbUser.addUser(4, "test", "test", 1);
             User getAddedUser = dbUser.getUser(4);
             System.out.println(getAddedUser.getUserName());
         } else {
-            System.out.println("User present");
+            System.out.println("User not present");
+            dbUser.addUser(4, "test", "test", 1);
+            User getAddedUser = dbUser.getUser(4);
+            System.out.println(getAddedUser.getUserName());
         }
     }
 }

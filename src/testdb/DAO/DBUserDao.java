@@ -13,12 +13,10 @@ public class DBUserDao implements IUserDao {
 
     private User user;
     private final ArrayList<User> userList;
-    private final ArrayList<User> finalUserList;
-    private boolean userPresent = false;
+
 
     public DBUserDao() {
         userList = new ArrayList<>();
-        finalUserList = new ArrayList<>();
         user = null;
     }
 
@@ -68,12 +66,12 @@ public class DBUserDao implements IUserDao {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                int customerId = rs.getInt(1);
+                int userId = rs.getInt(1);
                 String userName = rs.getString(2);
                 String password = rs.getString(3);
                 int active = rs.getInt(4);
 
-                user = new User(customerId, userName, password, active);
+                user = new User(userId, userName, password, active);
                 userList.add(user);
             }
         } catch (SQLException ex) {
