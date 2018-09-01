@@ -33,7 +33,7 @@ public class DBCustomerDao implements ICustomerDao {
             System.out.println(ex);
         }
     }
-    
+
     @Override
     public void deleteCustomer(int deletedCustomerId) {
         Statement stmt = null;
@@ -117,4 +117,32 @@ public class DBCustomerDao implements ICustomerDao {
 //        return null;
     }
 
+    @Override
+    public void updateCustomer(int upCustomerId, String upCustomerName) {
+        Statement stmt = null;
+
+        try {
+            Connection conn = DataSource.getConnection();
+            stmt = conn.createStatement();
+
+            String updateSql = null;
+            updateSql = "update customer set customer.customerName =" + upCustomerName + " where customer.customerId =" + upCustomerId;
+            stmt.executeUpdate(updateSql);
+
+            String selectSql = "select customerId,customerName,addressId,active from customer where customer.customerId=" + upCustomerId;
+            ResultSet result = stmt.executeQuery(selectSql);
+
+            while (result.next()) {
+                int customerId = result.getInt(1);
+                String customerName = result.getString(2);
+                int addressId = result.getInt(3);
+                int active = result.getInt(4);
+
+                customer = new Customer(customerId, customerName, addressId, active);
+                System.out.println("Updated Customer Name: " + customer.getCustomerName());
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
 }

@@ -1,19 +1,18 @@
 package testdb.DAO;
 
 import Objects.Appointment;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface IAppointmentDao {
 
-    public Appointment createAppointment(Appointment appointment);
+    public void addAppointment(int appointmentId, String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end);
 
-    public void deleteAppointment(Appointment appointment);
+    public void deleteAppointment(int deletedAppointmentId);
 
     public ArrayList<Appointment> getAllAppointments();
 
-    public Appointment getCustomerAppointment(int customerId);
+    public Appointment getAppointment(int appointmentId);
 
-    public void updateAppointment(Appointment oldAppointment, Appointment updatedAppointment);
-
-    public void updateAppointmentInfo(int appointmentId);
+    public void updateAppointmentTitle(int upAppointmentId, String upAppointmentTitle);
 }

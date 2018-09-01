@@ -3,8 +3,6 @@ package testdb.DAO;
 import Objects.User;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import static java.sql.ResultSet.CONCUR_READ_ONLY;
-import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -13,7 +11,6 @@ public class DBUserDao implements IUserDao {
 
     private User user;
     private final ArrayList<User> userList;
-
 
     public DBUserDao() {
         userList = new ArrayList<>();
@@ -114,38 +111,32 @@ public class DBUserDao implements IUserDao {
     }
 
     @Override
-    public void updateUser(User oldUser, User updatedUser) {
+    public void updateUserName(int upUserId, String upUserName) {
         Statement stmt = null;
 
         try {
             Connection conn = DataSource.getConnection();
-            stmt = conn.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            int result = stmt.executeUpdate(
-                    "insert into User values (4, 'test', 'password', 1)");
-            System.out.println(result);
+            stmt = conn.createStatement();
+
+            String updateSql = null;
+            updateSql = "update user set user.userName =" + upUserName + " where user.userId =" + upUserId;
+            stmt.executeUpdate(updateSql);
+
+            String selectSql = "select userId,userName,password,active from user where user.userId=" + upUserId;
+            ResultSet result = stmt.executeQuery(selectSql);
+
+            while (result.next()) {
+                int userId = result.getInt(1);
+                String userName = result.getString(2);
+                String password = result.getString(3);
+                int active = result.getInt(4);
+
+                user = new User(userId, userName, password, active);
+                System.out.println("Updated User Name: " + user.getUserName());
+            }
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-    }
-
-    @Override
-    public void updateUserInfo(int userId) {
-        User updatedUser = getUser(userId);
-        Statement stmt = null;
-
-        try {
-            Connection conn = DataSource.getConnection();
-            stmt = conn.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("select a.userId,c.customerId,a.title,a.description,a.location,a.contact,a.URL,a.`start`,a.`end` from customer c join user a on c.customerId = a.customerId\n"
-                    + "where c.customerId =" + userId);
-
-            while (rs.next()) {
-
-            }
-        } catch (SQLException ex) {
-
-        }
-
     }
 
 }

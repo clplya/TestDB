@@ -13,7 +13,5 @@ public interface IUserDao {
 
     public User getUser(int userId);
 
-    public void updateUser(User oldUser, User updatedUser);
-
-    public void updateUserInfo(int userId);
+    public void updateUserName(int upUserId, String upUserName);
 }
