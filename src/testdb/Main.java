@@ -4,6 +4,7 @@ import Objects.Address;
 import Objects.Appointment;
 import Objects.Customer;
 import Objects.User;
+import static java.time.LocalDateTime.now;
 import java.util.ArrayList;
 import testdb.DAO.DBAddressDao;
 import testdb.DAO.DBAppointmentDao;
@@ -91,12 +92,12 @@ public class Main {
         if (appointmentPresent == true) { //appointment present
             dbAppointment.deleteAppointment(4);
             System.out.println("Appointment present");
-            dbAppointment.addAppointment(4, "Test Appointment", "This is a test Appointment", "Your Doctor's Office", "Tammy at the Front Desk", now(), now());
+            dbAppointment.addAppointment(4, 1, "Test Appointment", "This is a test Appointment", "Your Doctors Office", "Tammy at the Front Desk", "http://www.google.com", now(), now());
             Appointment addedAppointment = dbAppointment.getAppointment(4);
             System.out.println(addedAppointment.getTitle());
         } else { //Appointment not present
             System.out.println("Appointment not present");
-            dbAppointment.addAppointment(4, "Test Appointment", "This is a test Appointment", "Your Doctor's Office", "Tammy at the Front Desk", now(), now());
+            dbAppointment.addAppointment(4, 1, "Test Appointment", "This is a test Appointment", "Your Doctors Office", "Tammy at the Front Desk", "http://www.google.com", now(), now());
             Appointment addedAppointment = dbAppointment.getAppointment(4);
             System.out.println(addedAppointment.getTitle());
         }

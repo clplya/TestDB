@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import static java.time.LocalDateTime.now;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -21,14 +22,14 @@ public class DBAppointmentDao implements IAppointmentDao {
     }
 
     @Override
-    public void addAppointment(int appointmentId, String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end) {
+    public void addAppointment(int appointmentId, int customerId, String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end) {
         Statement stmt = null;
 
         try {
             Connection conn = DataSource.getConnection();
 
             stmt = conn.createStatement();
-            String sql = "insert into appointment(appointmentId,title,description,location,contact,url,start,end,createDate,createdBy,lastUpdateBy) values (" + appointmentId + ",'" + title + "','" + description + "'," + location + "," + contact + "," + url + "," + start + "," + end + ",now(),1,1)";
+            String sql = "insert into appointment(appointmentId,customerId,title,description,location,contact,url,start,end,createDate,createdBy,lastUpdateBy) values (" + appointmentId + "," + customerId + ",'" + title + "','" + description + "','" + location + "','" + contact + "','" + url + "','" + start + "','" + end + "','" + now() + "',1,1)";
             int result = stmt.executeUpdate(sql);
             System.out.println("Inserting number of records: " + result);
 
@@ -63,20 +64,21 @@ public class DBAppointmentDao implements IAppointmentDao {
             Connection conn = DataSource.getConnection();
 
             stmt = conn.createStatement();
-            String sql = "select appointmentId,title,description,location,contact,url,start,end from appointment";
+            String sql = "select appointmentId,customerId,title,description,location,contact,url,start,end from appointment";
             ResultSet result = stmt.executeQuery(sql);
 
             while (result.next()) {
                 int appointmentId = result.getInt(1);
-                String title = result.getString(2);
-                String description = result.getString(3);
-                String location = result.getString(4);
-                String contact = result.getString(5);
-                String url = result.getString(6);
-                Date startDate = result.getDate(7);
-                Date endDate = result.getDate(8);
+                int customerId = result.getInt(2);
+                String title = result.getString(3);
+                String description = result.getString(4);
+                String location = result.getString(5);
+                String contact = result.getString(6);
+                String url = result.getString(7);
+                Date startDate = result.getDate(8);
+                Date endDate = result.getDate(9);
 
-                appointment = new Appointment(appointmentId, title, description, location, contact, url, startDate, endDate);
+                appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, startDate, endDate);
                 appointmentList.add(appointment);
             }
         } catch (SQLException ex) {
@@ -102,19 +104,20 @@ public class DBAppointmentDao implements IAppointmentDao {
             Connection conn = DataSource.getConnection();
             stmt = conn.createStatement();
 
-            ResultSet result = stmt.executeQuery("select appointmentId,title,description,location,contact,url,start,end from appointment where appointmentId =" + appointmentId);
+            ResultSet result = stmt.executeQuery("select appointmentId,customerId,title,description,location,contact,url,start,end from appointment where appointmentId =" + appointmentId);
 
             while (result.next()) {
                 int apptId = result.getInt(1);
-                String title = result.getString(2);
-                String description = result.getString(3);
-                String location = result.getString(4);
-                String contact = result.getString(5);
-                String url = result.getString(6);
-                Date startDate = result.getDate(7);
-                Date endDate = result.getDate(8);
+                int customerId = result.getInt(2);
+                String title = result.getString(3);
+                String description = result.getString(4);
+                String location = result.getString(5);
+                String contact = result.getString(6);
+                String url = result.getString(7);
+                Date startDate = result.getDate(8);
+                Date endDate = result.getDate(9);
 
-                appointment = new Appointment(apptId, title, description, location, contact, url, startDate, endDate);
+                appointment = new Appointment(apptId, customerId, title, description, location, contact, url, startDate, endDate);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -134,20 +137,21 @@ public class DBAppointmentDao implements IAppointmentDao {
             updateSql = "update appointment set appointment.title =" + upAppointmentTitle + " where appointment.appointmentId =" + upAppointmentId;
             stmt.executeUpdate(updateSql);
 
-            String selectSql = "select appointmentId,title,description,location,contact,url,start,end from appointment where appointment.appointmentId=" + upAppointmentId;
+            String selectSql = "select appointmentId,customerId,title,description,location,contact,url,start,end from appointment where appointment.appointmentId=" + upAppointmentId;
             ResultSet result = stmt.executeQuery(selectSql);
 
             while (result.next()) {
                 int appointmentId = result.getInt(1);
-                String title = result.getString(2);
-                String description = result.getString(3);
-                String location = result.getString(4);
-                String contact = result.getString(5);
-                String url = result.getString(6);
-                Date startDate = result.getDate(7);
-                Date endDate = result.getDate(8);
+                int customerId = result.getInt(2);
+                String title = result.getString(3);
+                String description = result.getString(4);
+                String location = result.getString(5);
+                String contact = result.getString(6);
+                String url = result.getString(7);
+                Date startDate = result.getDate(8);
+                Date endDate = result.getDate(9);
 
-                appointment = new Appointment(appointmentId, title, description, location, contact, url, startDate, endDate);
+                appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, startDate, endDate);
                 System.out.println("Updated Appointment Title: " + appointment.getTitle());
             }
         } catch (SQLException ex) {

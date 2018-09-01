@@ -5,6 +5,7 @@ import java.util.Date;
 public class Appointment {
 
     private int appointmentId;
+    private int customerId;
     private String title;
     private String description;
     private String location;
@@ -13,9 +14,10 @@ public class Appointment {
     private Date startDate;
     private Date endDate;
 
-    public Appointment(int appointmentId, String title, String description, String location,
+    public Appointment(int appointmentId, int customerId, String title, String description, String location,
             String contact, String URL, Date startDate, Date endDate) {
         this.appointmentId = appointmentId;
+        this.customerId = customerId;
         this.title = title;
         this.description = description;
         this.location = location;
@@ -31,6 +33,14 @@ public class Appointment {
 
     public void setAppointmentId(int appointmentId) {
         this.appointmentId = appointmentId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public String getTitle() {

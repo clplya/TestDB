@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface IAppointmentDao {
 
-    public void addAppointment(int appointmentId, String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end);
+    public void addAppointment(int appointmentId, int customerId, String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end);
 
     public void deleteAppointment(int deletedAppointmentId);
 
